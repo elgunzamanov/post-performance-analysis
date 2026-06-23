@@ -170,6 +170,44 @@
 	</div>
 </section>
 
+<!-- TODO: Determining on which days posts receive the highest number of reactions -->
+<section>
+	<h2 class="section-title">
+		Reactions Distribution by Day of Week
+		<span class="badge">Activity Heatmap</span>
+	</h2>
+	
+	<div class="stats-card">
+		<div class="chart-container">
+			<div class="chart-bar-wrapper" th:each="stat : ${dashboard.dayStats}">
+				<div class="chart-bar-outer">
+					<div class="chart-tooltip" th:text="${stat.count} + ' Reactions' + (${stat.isPeak} ? ' (Peak)' : '')">120 Reactions</div>
+					
+					<div class="chart-bar-inner"
+					     th:style="'height: ' + ${stat.percentage} + '%;' + (${stat.isPeak} ? ' background-color: #2563eb;' : '')">
+					</div>
+				</div>
+				
+				<span class="chart-label"
+				      th:text="${stat.day}"
+				      th:style="${stat.isPeak} ? 'color: #2563eb; font-weight: 600;' : ''">Mon</span>
+			</div>
+		</div>
+		
+		<div class="chart-legends">
+			<div class="legend-item">
+				<div class="legend-color"></div>
+				<span>Regular Days</span>
+			</div>
+			
+			<div class="legend-item">
+				<div class="legend-color" style="background: #2563eb;"></div>
+				<span>Peak Engagement Day</span>
+			</div>
+		</div>
+	</div>
+</section>
+
 <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
