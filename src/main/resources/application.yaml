@@ -1,3 +1,11 @@
 spring:
    application:
       name: post-performance-analysis
+
+meta:
+   graph:
+      page-id: ${META_GRAPH_PAGE_ID}
+      page-access-token: ${META_GRAPH_PAGE_ACCESS_TOKEN}
+      limit: ${META_GRAPH_LIMIT}
+      page-size: ${META_GRAPH_PAGE_SIZE}
+      fields: ${META_GRAPH_FIELDS}
