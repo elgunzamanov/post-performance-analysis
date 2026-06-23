@@ -23,6 +23,10 @@ public class AnalyticsService {
 		List<PostDto> posts = metaGraphApiService.getPosts();
 		Map<String, Long> reactionsByDayOfWeek = calculateReactionsByDayOfWeek(posts);
 		long maxReaction = calculateMaxReaction(reactionsByDayOfWeek);
+		List<DayStat> dayStats = prepareDayStats(reactionsByDayOfWeek, maxReaction);
+		List<String> peakDays = getPeakDays(dayStats);
+		long peakReaction = getPeakReaction(dayStats);
+		double regularDaysAverage = getRegularDaysAverage(dayStats);
 		
 		return new DashboardDto(
 			metaGraphApiService.getPageSize(),
@@ -30,7 +34,10 @@ public class AnalyticsService {
 			findTop3Posts(),
 			reactionsByDayOfWeek,
 			maxReaction,
-			prepareDayStats(reactionsByDayOfWeek, maxReaction)
+			dayStats,
+			formatPeakDays(peakDays),
+			calculateEngagementSurgePercentage(peakReaction, regularDaysAverage),
+			hasReactions(peakReaction)
 		);
 	}
 	
@@ -105,5 +112,46 @@ public class AnalyticsService {
 				return new DayStat(day, count, percentage, isPeak);
 			})
 			.toList();
+	}
+	
+	private @NonNull List<String> getPeakDays(@NonNull List<DayStat> dayStats) {
+		return dayStats.stream()
+			.filter(DayStat::isPeak)
+			.map(DayStat::day)
+			.toList();
+	}
+	
+	private @NonNull String formatPeakDays(List<String> peakDays) {
+		return String.join(", ", peakDays);
+	}
+	
+	private long getPeakReaction(@NonNull List<DayStat> dayStats) {
+		return dayStats.stream()
+			.filter(DayStat::isPeak)
+			.mapToLong(DayStat::count)
+			.findFirst()
+			.orElse(0);
+	}
+	
+	private double getRegularDaysAverage(@NonNull List<DayStat> dayStats) {
+		return dayStats.stream()
+			.filter(stat -> !stat.isPeak())
+			.mapToLong(DayStat::count)
+			.average()
+			.orElse(0);
+	}
+	
+	private int calculateEngagementSurgePercentage(long peakReaction, double regularDaysAverage) {
+		if (regularDaysAverage > 0) {
+			return (int) Math.round(
+				((peakReaction - regularDaysAverage) / regularDaysAverage) * 100
+			);
+		}
+		
+		return peakReaction > 0 ? 100 : 0;
+	}
+	
+	private boolean hasReactions(long peakReaction) {
+		return peakReaction > 0;
 	}
 }

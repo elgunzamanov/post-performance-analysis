@@ -9,6 +9,9 @@ public record DashboardDto(
 	List<PostDto> top3Posts,
 	Map<String, Long> reactionsByDayOfWeek,
 	long maxReaction,
-	List<DayStat> dayStats
+	List<DayStat> dayStats,
+	String formattedPeakDays,
+	int engagementSurgePercentage,
+	boolean hasReactions
 ) {
 }
