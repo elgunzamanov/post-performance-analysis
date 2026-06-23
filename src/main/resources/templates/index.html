@@ -208,6 +208,17 @@
 	</div>
 </section>
 
+<!-- TODO: Best Posting Time -->
+<section>
+	<h2 class="section-title">Best Posting Time</h2>
+	
+	<p class="best-time-text">
+		<span class="highlight" th:text="${dashboard.bestTimeSlot.day}"></span> 👉 
+		<span class="time" th:text="${dashboard.bestTimeSlot.hour + ':00'}"></span> -
+		<span class="time" th:text="${(dashboard.bestTimeSlot.hour + 1) % 24 + ':00'}"></span>
+	</p>
+</section>
+
 <!-- TODO: Providing a brief conclusion on engagement performance -->
 <section th:if="${dashboard.hasReactions}">
 	<h2 class="section-title">Engagement Insights</h2>
@@ -229,7 +240,14 @@
 				<span class="highlight-text" th:text="${dashboard.engagementSurgePercentage} + '% more engagement'">
 					42% more engagement
 				</span>
-				compared to other days. The top 3 performing posts are primarily driven by practical insights and company updates.
+				compared to other days. Best posting time is 
+				<span class="highlight"
+				      th:text="${dashboard.bestTimeSlot.day}"></span> between 
+				<span class="time"
+				      th:text="${dashboard.bestTimeSlot.hour + ':00'}"></span> and 
+				<span class="time"
+				      th:text="${(dashboard.bestTimeSlot.hour + 1) % 24 + ':00'}"></span>.
+				The top 3 performing posts are primarily driven by practical insights and company updates.
 				To further boost reaction and comment rates, we recommend focusing on Q&A-style posts in the next phase.
 			</p>
 		</div>

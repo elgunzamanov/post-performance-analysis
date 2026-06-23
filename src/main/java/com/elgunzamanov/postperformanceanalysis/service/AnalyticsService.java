@@ -3,6 +3,7 @@ package com.elgunzamanov.postperformanceanalysis.service;
 import com.elgunzamanov.postperformanceanalysis.dto.DashboardDto;
 import com.elgunzamanov.postperformanceanalysis.dto.DayStat;
 import com.elgunzamanov.postperformanceanalysis.dto.PostDto;
+import com.elgunzamanov.postperformanceanalysis.dto.TimeSlotStats;
 import com.elgunzamanov.postperformanceanalysis.dto.comment.CommentSummaryDto;
 import com.elgunzamanov.postperformanceanalysis.dto.comment.CommentsDto;
 import com.elgunzamanov.postperformanceanalysis.dto.reaction.ReactionSummaryDto;
@@ -11,8 +12,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +27,15 @@ public class AnalyticsService {
 		List<PostDto> posts = metaGraphApiService.getPosts();
 		Map<String, Long> reactionsByDayOfWeek = calculateReactionsByDayOfWeek(posts);
 		long maxReaction = calculateMaxReaction(reactionsByDayOfWeek);
+
 		List<DayStat> dayStats = prepareDayStats(reactionsByDayOfWeek, maxReaction);
 		List<String> peakDays = getPeakDays(dayStats);
 		long peakReaction = getPeakReaction(dayStats);
 		double regularDaysAverage = getRegularDaysAverage(dayStats);
+		
+		Map<String, List<PostDto>> groupedPostsByDayOfWeekAndHour = groupPostsByDayOfWeekAndHour(posts);
+		List<TimeSlotStats> timeSlotStats = buildTimeSlotStats(groupedPostsByDayOfWeekAndHour);
+		TimeSlotStats bestTimeSlot = findBestTimeSlot(timeSlotStats);
 		
 		return new DashboardDto(
 			metaGraphApiService.getPageSize(),
@@ -37,11 +46,12 @@ public class AnalyticsService {
 			dayStats,
 			formatPeakDays(peakDays),
 			calculateEngagementSurgePercentage(peakReaction, regularDaysAverage),
-			hasReactions(peakReaction)
+			hasReactions(peakReaction),
+			bestTimeSlot
 		);
 	}
 	
-	private List<PostDto> findTop3Posts() {
+	private @NonNull List<PostDto> findTop3Posts() {
 		return metaGraphApiService.getPosts().stream()
 			.sorted((p1, p2) -> Long.compare(
 				calculateEngagement(p2),
@@ -153,5 +163,39 @@ public class AnalyticsService {
 	
 	private boolean hasReactions(long peakReaction) {
 		return peakReaction > 0;
+	}
+	
+	private Map<String, List<PostDto>> groupPostsByDayOfWeekAndHour(@NonNull List<PostDto> posts) {
+		return posts.stream()
+			.collect(Collectors.groupingBy(post -> {
+				LocalDateTime time = post.createdTime().toLocalDateTime();
+				return time.getDayOfWeek() + "-" + time.getHour();
+			}));
+	}
+	
+	private @NonNull List<TimeSlotStats> buildTimeSlotStats(
+		@NonNull Map<String, List<PostDto>> groupedPostsByDayOfWeekAndHour
+	) {
+		return groupedPostsByDayOfWeekAndHour.entrySet().stream()
+			.map(entry -> {
+				String[] parts = entry.getKey().split("-");
+				DayOfWeek day = DayOfWeek.valueOf(parts[0]);
+				int hour = Integer.parseInt(parts[1]);
+				
+				List<PostDto> slotPosts = entry.getValue();
+				
+				long engagement = slotPosts.stream()
+					.mapToLong(PostDto::getEngagementScore)
+					.sum();
+				
+				return new TimeSlotStats(day, hour, engagement, slotPosts.size());
+			})
+			.toList();
+	}
+	
+	private TimeSlotStats findBestTimeSlot(@NonNull List<TimeSlotStats> timeSlotStats) {
+		return timeSlotStats.stream()
+			.max(Comparator.comparing(TimeSlotStats::totalEngagement))
+			.orElse(null);
 	}
 }

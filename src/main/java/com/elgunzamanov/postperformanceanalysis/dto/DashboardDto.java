@@ -12,6 +12,7 @@ public record DashboardDto(
 	List<DayStat> dayStats,
 	String formattedPeakDays,
 	int engagementSurgePercentage,
-	boolean hasReactions
+	boolean hasReactions,
+	TimeSlotStats bestTimeSlot
 ) {
 }

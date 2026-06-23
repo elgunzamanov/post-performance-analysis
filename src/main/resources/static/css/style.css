@@ -429,6 +429,34 @@ body {
 }
 
 /* ==========================================================================
+   BEST POSTING TIME
+   ========================================================================== */
+
+.best-time-text {
+	font-size: 14px;
+	color: #374151; /* Notion dark gray */
+	line-height: 1.6;
+	letter-spacing: 0;
+}
+
+.highlight {
+	color: #111827; /* almost black */
+	font-weight: 600;
+	background: rgba(17, 24, 39, 0.06);
+	padding: 1px 6px;
+	border-radius: 6px;
+	margin-left: 4px;
+}
+
+.time {
+	font-weight: 600;
+	color: #111827;
+	background: rgba(17, 24, 39, 0.04);
+	padding: 1px 6px;
+	border-radius: 6px;
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
 
