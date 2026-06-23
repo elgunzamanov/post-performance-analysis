@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Post Performance Analysis</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<!-- TODO: Dashboard Page Title -->
+<header class="dashboard-header">
+	<h1>Post Performance Analysis</h1>
+	<p>A comprehensive report on engagement metrics, daily activity patterns, and audience interaction.</p>
+</header>
+
+<!-- TODO: Fetched Posts -->
+<section>
+	<h2 class="section-title">
+		Fetched Posts
+		<span class="badge">Active Feed</span>
+	</h2>
+	
+	<div class="advanced-table-card">
+		<div>
+			<div class="table-toolbar">
+				<div class="search-box">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+					     stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round"
+						      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637z"/>
+					</svg>
+					<label>
+						<input type="text" id="searchInput" placeholder="Search posts by message...">
+					</label>
+				</div>
+				
+				<div class="filter-group">
+					<button class="filter-btn">Export CSV</button>
+				</div>
+			</div>
+		</div>
+		
+		<table class="premium-table">
+			<thead>
+			<tr>
+				<th style="width: 42%;">Message</th>
+				<th style="width: 20%;">Posted At</th>
+				<th class="text-center" style="width: 12%;">Reactions</th>
+				<th class="text-center" style="width: 12%;">Comments</th>
+				<th class="text-center" style="width: 14%;">Engagement</th>
+			</tr>
+			</thead>
+			
+			<tbody id="postsTableBody">
+			<tr th:each="post : ${dashboard.posts}">
+				<td>
+					<div class="premium-text-truncate"
+					     th:title="${post.message} ?: 'No message'"
+					     th:text="${post.message} ?: 'No message'">
+					</div>
+				</td>
+				
+				<td>
+					<span class="premium-date"
+					      th:text="${#temporals.format(post.createdTime, 'dd.MM.yyyy HH:mm')}">
+					</span>
+				</td>
+				
+				<td class="text-center">
+					<span class="count-badge"
+					      th:text="${post.reactions.summary.totalCount}">
+					</span>
+				</td>
+				
+				<td class="text-center">
+					<span class="count-badge"
+					      th:text="${post.comments.summary.totalCount}">
+					</span>
+				</td>
+				
+				<td class="text-center">
+					<span class="engagement-badge"
+					      th:text="${post.reactions.summary.totalCount + post.comments.summary.totalCount}">
+					</span>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		
+		<div class="table-pagination">
+    		<span class="pagination-info" id="pageInfo">
+    		    Showing ...
+    		</span>
+			
+			<div class="pagination-controls">
+				<button
+					id="prevBtn"
+					class="pagination-btn disabled"
+					onclick="prevPage()"
+				>
+					Previous
+				</button>
+				
+				<button
+					id="nextBtn"
+					class="pagination-btn"
+					onclick="nextPage()"
+				>
+					Next
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

@@ -40,4 +40,8 @@ public class MetaGraphApiService {
 			throw new MetaGraphApiException("Meta Graph API response could not be parsed.", ex);
 		}
 	}
+	
+	public int getPageSize() {
+		return metaGraphApiProperties.pageSize();
+	}
 }

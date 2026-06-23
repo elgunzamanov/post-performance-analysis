@@ -1,0 +1,429 @@
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	background-color: #fafafa;
+	color: #111827;
+	padding: 40px 24px;
+	max-width: 1200px;
+	margin: 0 auto;
+	line-height: 1.5;
+}
+
+/* ==========================================================================
+   2. DASHBOARD HEADER & LAYOUT
+   ========================================================================== */
+.dashboard-header {
+	margin-bottom: 32px;
+	border-bottom: 1px solid #e5e7eb;
+	padding-bottom: 24px;
+}
+
+.dashboard-header h1 {
+	font-size: 28px;
+	font-weight: 700;
+	color: #111827;
+	letter-spacing: -0.025em;
+}
+
+.dashboard-header p {
+	font-size: 14px;
+	color: #6b7280;
+	margin-top: 4px;
+}
+
+.section-title {
+	font-size: 18px;
+	font-weight: 600;
+	color: #111827;
+	margin: 36px 0 16px 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.section-title span.badge {
+	font-size: 11px;
+	background: #f3f4f6;
+	color: #4b5563;
+	padding: 2px 8px;
+	border-radius: 12px;
+	font-weight: 500;
+}
+
+/* ==========================================================================
+   3. PREMIUM TABLE SYSTEMS (ADVANCED & SIMPLE)
+   ========================================================================== */
+.advanced-table-card {
+	background: #ffffff;
+	border-radius: 12px;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+	overflow: hidden;
+	margin-bottom: 24px;
+}
+
+.simple-table-container {
+	background: #ffffff;
+	border-radius: 12px;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+	overflow: hidden;
+}
+
+/* Toolbar & Filters */
+.table-toolbar {
+	padding: 16px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #e5e7eb;
+	background: #fafafa;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.search-box {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	max-width: 480px;
+}
+
+.search-box input {
+	width: 100%;
+	min-width: 360px;
+	padding: 8px 12px 8px 36px;
+	font-size: 14px;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	outline: none;
+	transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-box svg {
+	position: absolute;
+	left: 12px;
+	color: #9ca3af;
+	width: 16px;
+	height: 16px;
+}
+
+.filter-group {
+	display: flex;
+	gap: 8px;
+}
+
+.filter-btn {
+	background: #ffffff;
+	border: 1px solid #d1d5db;
+	padding: 8px 14px;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #374151;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+	background: #f9fafb;
+	border-color: #c5c7cb;
+}
+
+/* Base Table Elements */
+.premium-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #1f2937;
+}
+
+.premium-table th {
+	background-color: #fafafa;
+	color: #4b5563;
+	font-weight: 600;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-align: left;
+	padding: 14px 20px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.premium-table td {
+	padding: 16px 20px;
+	border-bottom: 1px solid #f3f4f6;
+	vertical-align: middle;
+	transition: background-color 0.15s ease;
+}
+
+.premium-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.premium-table tbody tr:hover td {
+	background-color: #fafafa;
+}
+
+/* Text & Badges within Tables */
+.premium-text-truncate {
+	max-width: 380px;
+	font-weight: 500;
+	color: #111827;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.premium-date {
+	color: #4b5563;
+	font-variant-numeric: tabular-nums;
+	font-size: 14px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.count-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	background-color: #f3f4f6;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #374151;
+}
+
+.engagement-badge {
+	display: inline-block;
+	padding: 4px 10px;
+	background-color: #e0f2fe;
+	color: #0369a1;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+/* Pagination Footer */
+.table-pagination {
+	padding: 14px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-top: 1px solid #e5e7eb;
+	background: #ffffff;
+}
+
+.pagination-info {
+	font-size: 13px;
+	color: #6b7280;
+}
+
+.pagination-controls {
+	display: flex;
+	gap: 8px;
+}
+
+.pagination-btn {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	color: #374151;
+	padding: 6px 12px;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	text-decoration: none;
+}
+
+.pagination-btn:hover:not(.disabled) {
+	background: #f9fafb;
+	border-color: #d1d5db;
+}
+
+.pagination-btn.disabled {
+	color: #9ca3af;
+	background: #f3f4f6;
+	cursor: not-allowed;
+	border-color: #e5e7eb;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   4. GRAPHIC STATS STYLING (CHART)
+   ========================================================================== */
+.stats-card {
+	background: #ffffff;
+	border-radius: 12px;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+	padding: 24px;
+	margin-bottom: 24px;
+}
+
+.chart-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	height: 220px;
+	padding-top: 20px;
+	border-bottom: 1px solid #e5e7eb;
+	margin-bottom: 12px;
+}
+
+.chart-bar-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1;
+	height: 100%;
+	justify-content: flex-end;
+	gap: 12px;
+}
+
+.chart-bar-outer {
+	width: 24px;
+	background: #f3f4f6;
+	border-radius: 6px 6px 0 0;
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	position: relative;
+	cursor: pointer;
+}
+
+.chart-bar-outer:hover .chart-bar-inner {
+	background: #2563eb;
+}
+
+.chart-bar-inner {
+	width: 100%;
+	background: #3b82f6;
+	border-radius: 6px 6px 0 0;
+	transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+	position: relative;
+}
+
+/* Tooltip inside bar chart */
+.chart-tooltip {
+	position: absolute;
+	top: -32px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #111827;
+	color: #ffffff;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.chart-bar-outer:hover .chart-tooltip {
+	opacity: 1;
+}
+
+.chart-label {
+	font-size: 12px;
+	font-weight: 500;
+	color: #6b7280;
+	margin-bottom: 8px;
+}
+
+.chart-legends {
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 16px;
+	font-size: 13px;
+	color: #4b5563;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.legend-color {
+	width: 12px;
+	height: 12px;
+	border-radius: 3px;
+	background: #3b82f6;
+}
+
+/* ==========================================================================
+   5. SOMETHING SPECIAL (INSIGHTS CARD)
+   ========================================================================== */
+.special-conclusion-card {
+	background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+	border: 1px solid #bbf7d0;
+	border-radius: 12px;
+	padding: 24px;
+	margin-top: 24px;
+	box-shadow: 0 4px 15px rgba(240, 253, 244, 0.5);
+	display: flex;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+.special-icon-wrapper {
+	background: #dcfce7;
+	border: 1px solid #86efac;
+	padding: 12px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #166534;
+	flex-shrink: 0;
+}
+
+.special-content h3 {
+	font-size: 16px;
+	font-weight: 700;
+	color: #14532d;
+	margin-bottom: 6px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.special-content p {
+	font-size: 14px;
+	color: #166534;
+	line-height: 1.6;
+	font-weight: 450;
+}
+
+.highlight-text {
+	font-weight: 600;
+	color: #15803d;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
