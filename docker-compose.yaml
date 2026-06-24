@@ -1,0 +1,12 @@
+services:
+   post-performance-analysis:
+      image: elgunzamanov/post-performance-analysis:v1
+      container_name: post-performance-analysis
+      ports:
+         - "8080:8080"
+      environment:
+         META_GRAPH_PAGE_ID: ${META_GRAPH_PAGE_ID}
+         META_GRAPH_PAGE_ACCESS_TOKEN: ${META_GRAPH_PAGE_ACCESS_TOKEN}
+         META_GRAPH_LIMIT: ${META_GRAPH_LIMIT}
+         META_GRAPH_PAGE_SIZE: ${META_GRAPH_PAGE_SIZE}
+         META_GRAPH_FIELDS: ${META_GRAPH_FIELDS}

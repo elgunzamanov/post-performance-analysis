@@ -6,6 +6,6 @@ meta:
    graph:
       page-id: ${META_GRAPH_PAGE_ID}
       page-access-token: ${META_GRAPH_PAGE_ACCESS_TOKEN}
-      limit: ${META_GRAPH_LIMIT}
-      page-size: ${META_GRAPH_PAGE_SIZE}
-      fields: ${META_GRAPH_FIELDS}
+      limit: ${META_GRAPH_LIMIT:20}
+      page-size: ${META_GRAPH_PAGE_SIZE:5}
+      fields: ${META_GRAPH_FIELDS:message,created_time,reactions.summary(true),comments.summary(true)}
