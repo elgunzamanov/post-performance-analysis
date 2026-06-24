@@ -50,7 +50,7 @@ No guesswork. Just data-driven decisions.
 **Frontend**
 
 * Thymeleaf
-* HTML / CSS
+* HTML / CSS / JavaScript
 
 ---
 
