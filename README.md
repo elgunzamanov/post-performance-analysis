@@ -28,7 +28,6 @@ No guesswork. Just data-driven decisions.
 * 📅 Weekly performance breakdown
 * ⚡ Fast aggregation using Java Streams
 * 📊 Clean dashboard-ready DTO structure
-* 🔐 Backend-first architecture (API-driven)
 
 ---
 
